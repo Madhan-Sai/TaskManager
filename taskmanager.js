@@ -1,5 +1,14 @@
 var psList = require("ps-list");
+var http = require('http');
+var fs = require('fs');
+
 (async() => {
     console.log(await psList());
-    //=> [{pid: 3213, name: 'node', cmd: 'node test.js', ppid: 1, cpu: 0.1, memory: 1.5}, …]
 })();
+http.createServer(function(req, res) {
+    fs.readFile('home.html', function(err, data) {
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.write(data);
+        res.end();
+    });
+}).listen(8080);
